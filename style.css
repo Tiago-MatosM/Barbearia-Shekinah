@@ -1,0 +1,277 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #e0f7fa;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    padding: 40px;
+    background-color: #34495e;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex: 1;
+    margin-bottom: 40px;
+}
+
+.secao {
+    flex: 1;
+}
+
+.secao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.secao-header h2 {
+    margin: 0;
+    color: #e0f7fa;
+    font-size: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    color: #e0f7fa;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #4a627d;
+    background-color: #3f546a;
+    color: #ffffff;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    outline: none;
+    border-color: #e0f7fa;
+}
+
+.botao-principal {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-principal:hover {
+    background-color: #218838;
+}
+
+.total-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.finalizar-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.finalizar-btn:hover {
+    background-color: #0056b3;
+}
+
+.apagar-tudo-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.apagar-tudo-btn:hover {
+    background-color: #c82333;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #4a627d;
+    margin: 35px 0;
+}
+
+.lista {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #4a627d;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.lista li:last-child {
+    border-bottom: none;
+}
+
+.botao-acao {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+    margin-left: 10px;
+}
+
+.botao-acao.lixeira {
+    color: #e74c3c;
+}
+
+.botao-acao.chamar {
+    color: #007bff;
+}
+
+.atendido {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.ok-icon {
+    color: #28a745;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.delete-btn-fila {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #e74c3c;
+    padding: 5px;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+    margin-left: 10px;
+}
+
+.delete-btn-fila:hover {
+    opacity: 0.7;
+}
+
+.item-nome {
+    flex: 1;
+}
+
+.botoes-fila {
+    display: flex;
+    align-items: center;
+}
+
+#totalValor, #totalMensal {
+    font-size: 22px;
+    font-weight: bold;
+    color: #28a745;
+    margin-top: 20px;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px 10px; 
+    }
+
+    .container {
+        flex-direction: column;
+        gap: 25px;
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 26px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .secao-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    input[type="text"], input[type="number"] {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .botao-principal {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .lista li {
+        font-size: 15px;
+        flex-wrap: wrap; 
+    }
+
+    .total-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    #totalValor, #totalMensal {
+        font-size: 20px;
+        text-align: left;
+        margin-top: 0;
+    }
+}
