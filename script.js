@@ -187,11 +187,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             clientes.length = 0;
+            fila.length = 0;
             
             salvarDados();
             renderizarClientes();
             calcularTotalDiario();
             renderizarGanhosMensais();
+            renderizarFila();
         } else if (totalDiario === 0) {
              alert("Não há valor para ser salvo.");
         }
