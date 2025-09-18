@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
     const fila = JSON.parse(localStorage.getItem('fila')) || [];
     const ganhosMensais = JSON.parse(localStorage.getItem('ganhosMensais')) || [];
+    let editandoIndex = null;
+    let editandoFilaIndex = null;
     
     const inputFila = document.getElementById('nomeFila');
     const botaoAdicionarFila = document.getElementById('adicionarFila');
@@ -29,82 +31,112 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderizarFila() {
-        listaFilaElemento.innerHTML = '';
-        fila.forEach((cliente, index) => {
-            const itemLista = document.createElement('li');
-            
-            const nomeItem = document.createElement('span');
-            nomeItem.textContent = cliente.nome;
-            
-            if (cliente.atendido) {
-                nomeItem.classList.add('atendido');
-                const okIcone = document.createElement('span');
-                okIcone.textContent = '✅';
-                okIcone.classList.add('ok-icon');
-                itemLista.appendChild(okIcone);
-            }
-            
-            itemLista.appendChild(nomeItem);
+    listaFilaElemento.innerHTML = '';
+    fila.forEach((cliente, index) => {
+        const itemLista = document.createElement('li');
+        
+        const nomeItem = document.createElement('span');
+        nomeItem.className = 'item-nome';
+        nomeItem.textContent = cliente.nome;
+        
+        if (cliente.atendido) {
+            nomeItem.classList.add('atendido');
+            const okIcone = document.createElement('span');
+            okIcone.textContent = '✅';
+            okIcone.classList.add('ok-icon');
+            itemLista.appendChild(okIcone);
+        }
+        
+        itemLista.appendChild(nomeItem);
 
-            const botoes = document.createElement('div');
-            botoes.classList.add('botoes-fila');
+        const botoes = document.createElement('div');
+        botoes.classList.add('botoes-fila');
 
-            if (!cliente.atendido) {
-                const botaoChamar = document.createElement('button');
-                botaoChamar.textContent = 'Chamar';
-                botaoChamar.classList.add('botao-acao');
-                botaoChamar.classList.add('chamar');
-                
-                botaoChamar.addEventListener('click', function() {
-                    fila[index].atendido = true;
-                    salvarDados();
-                    renderizarFila();
-                    inputNome.value = cliente.nome;
-                });
-                
-                botoes.appendChild(botaoChamar);
-            }
+        const botaoEditar = document.createElement('button');
+        botaoEditar.innerHTML = '✏️';
+        botaoEditar.classList.add('botao-acao', 'editar');
+        botaoEditar.title = 'Editar nome na fila';
+        botaoEditar.addEventListener('click', function() {
+            inputFila.value = cliente.nome;
+            editandoFilaIndex = index;
+            botaoAdicionarFila.textContent = 'Salvar Alterações';
+            inputFila.focus();
+        });
+        botoes.appendChild(botaoEditar);
 
-            const botaoLixeira = document.createElement('button');
-            botaoLixeira.textContent = '🗑️';
-            botaoLixeira.classList.add('botao-acao');
-            botaoLixeira.classList.add('lixeira');
+        if (!cliente.atendido) {
+            const botaoChamar = document.createElement('button');
+            botaoChamar.innerHTML = '▶️';
+            botaoChamar.title = 'Chamar cliente';
+            botaoChamar.classList.add('botao-acao', 'chamar');
             
-            botaoLixeira.addEventListener('click', function() {
-                fila.splice(index, 1);
+            botaoChamar.addEventListener('click', function() {
+                fila[index].atendido = true;
                 salvarDados();
                 renderizarFila();
+                inputNome.value = cliente.nome;
             });
             
-            botoes.appendChild(botaoLixeira);
-            itemLista.appendChild(botoes);
-            listaFilaElemento.appendChild(itemLista);
-        });
-    }
+            botoes.appendChild(botaoChamar);
+        }
 
-    function renderizarClientes() {
-        listaClientesElemento.innerHTML = '';
-        clientes.forEach((cliente, index) => {
-            const itemLista = document.createElement('li');
-            itemLista.textContent = `${cliente.nome} - R$ ${cliente.valor.toFixed(2)}`;
-            
-            const botaoLixeira = document.createElement('button');
-            botaoLixeira.textContent = '🗑️';
-            botaoLixeira.classList.add('botao-acao');
-            botaoLixeira.classList.add('lixeira');
-            
-            botaoLixeira.addEventListener('click', function() {
-                clientes.splice(index, 1);
-                
-                salvarDados();
-                renderizarClientes();
-                calcularTotalDiario();
-            });
-            
-            itemLista.appendChild(botaoLixeira);
-            listaClientesElemento.appendChild(itemLista);
+        const botaoLixeira = document.createElement('button');
+        botaoLixeira.innerHTML = '🗑️';
+        botaoLixeira.classList.add('botao-acao', 'lixeira');
+        botaoLixeira.title = 'Remover da fila';
+        
+        botaoLixeira.addEventListener('click', function() {
+            fila.splice(index, 1);
+            salvarDados();
+            renderizarFila();
         });
-    }
+        
+        botoes.appendChild(botaoLixeira);
+        itemLista.appendChild(botoes);
+        listaFilaElemento.appendChild(itemLista);
+    });
+}
+
+function renderizarClientes() {
+    listaClientesElemento.innerHTML = '';
+    clientes.forEach((cliente, index) => {
+        const itemLista = document.createElement('li');
+        
+        const textoCliente = document.createElement('span');
+        textoCliente.textContent = `${cliente.nome} - R$ ${cliente.valor.toFixed(2)}`;
+        itemLista.appendChild(textoCliente);
+
+        const botoesContainer = document.createElement('div');
+
+        const botaoEditar = document.createElement('button');
+        botaoEditar.innerHTML = '✏️';
+        botaoEditar.classList.add('botao-acao', 'editar');
+        botaoEditar.title = 'Editar cliente';
+        botaoEditar.addEventListener('click', function() {
+            inputNome.value = cliente.nome;
+            inputValor.value = cliente.valor;
+            editandoIndex = index;
+            botaoAdicionar.textContent = 'Salvar Alterações';
+            inputNome.focus();
+        });
+        botoesContainer.appendChild(botaoEditar);
+        
+        const botaoLixeira = document.createElement('button');
+        botaoLixeira.innerHTML = '🗑️';
+        botaoLixeira.classList.add('botao-acao', 'lixeira');
+        botaoLixeira.title = 'Excluir cliente';
+        botaoLixeira.addEventListener('click', function() {
+            clientes.splice(index, 1);
+            salvarDados();
+            renderizarClientes();
+            calcularTotalDiario();
+        });
+        botoesContainer.appendChild(botaoLixeira);
+
+        itemLista.appendChild(botoesContainer);
+        listaClientesElemento.appendChild(itemLista);
+    });
+}
 
     function calcularTotalDiario() {
         const total = clientes.reduce((soma, cliente) => soma + cliente.valor, 0);
@@ -139,31 +171,65 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     botaoAdicionarFila.addEventListener('click', function() {
-        const nomeFila = inputFila.value;
-        if (nomeFila) {
-            const novoClienteFila = {
-                nome: nomeFila,
-                atendido: false
-            };
-            fila.push(novoClienteFila);
-            salvarDados();
-            renderizarFila();
-            inputFila.value = '';
-            inputFila.focus();
-        }
-    });
+    const nomeFila = inputFila.value.trim();
+
+    if (!nomeFila) {
+        alert('Por favor, digite um nome.');
+        return;
+    }
+
+    
+    if (editandoFilaIndex !== null) {
+        fila[editandoFilaIndex].nome = nomeFila;
+        alert('Nome na fila atualizado com sucesso!');
+        
+    } else {
+        const novoClienteFila = {
+            nome: nomeFila,
+            atendido: false
+        };
+        fila.push(novoClienteFila);
+    }
+
+    
+    editandoFilaIndex = null;
+    
+    
+    botaoAdicionarFila.textContent = 'Adicionar à Fila';
+
+    
+    salvarDados();
+    renderizarFila();
+    inputFila.value = '';
+    inputFila.focus();
+});
 
     botaoAdicionar.addEventListener('click', function() {
         const nomeCliente = inputNome.value;
         const valorPago = parseFloat(inputValor.value);
         
-        if (nomeCliente && !isNaN(valorPago)) {
-            const novoCliente = {
-                nome: nomeCliente,
-                valor: valorPago
+        if (!nomeCliente || isNaN(valorPago) || valorPago <= 0) {
+             alert("Por favor, preencha o nome e um valor válido.");
+            return;
+            };
+
+        if (editandoIndex !== null) {
+            clientes[editandoIndex].nome = nomeCliente;
+            clientes[editandoIndex].valor = valorPago;
+
+            alert('Cliente atualizado com sucesso!');
+
+            } else {
+                const novoCliente = {
+                    nome: nomeCliente,
+                    valor: valorPago
             };
             
             clientes.push(novoCliente);
+            }
+
+            editandoIndex = null;
+            botaoAdicionar.textContent = 'Adicionar';
             
             salvarDados();
             renderizarClientes();
@@ -172,9 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
             inputNome.value = '';
             inputValor.value = '';
             inputNome.focus();
-        } else {
-            alert("Por favor, preencha todos os campos.");
-        }
+            
     });
     
     botaoFinalizar.addEventListener('click', function() {
@@ -231,9 +295,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
     
-    
+
     renderizarFila();
     renderizarClientes();
     calcularTotalDiario();
     renderizarGanhosMensais();
-});
+    });

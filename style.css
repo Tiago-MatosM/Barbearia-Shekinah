@@ -279,3 +279,7 @@ hr {
 .escondido {
     display: none;
 }
+
+.botao-acao.editar {
+    color: #007bff;
+}
