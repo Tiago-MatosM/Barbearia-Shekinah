@@ -275,3 +275,7 @@ hr {
         margin-top: 0;
     }
 }
+
+.escondido {
+    display: none;
+}

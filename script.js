@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const listaGanhosMensaisElemento = document.getElementById('listaGanhosMensais');
     const totalMensalElemento = document.getElementById('totalMensal');
     const botaoApagarGanhos = document.getElementById('apagarGanhos');
+
+    const toggleGanhosBtn = document.getElementById('toggleGanhosBtn');
+    
+    const totalMensalContainer = document.getElementById('totalMensalContainer');
     
     function salvarDados() {
         localStorage.setItem('clientes', JSON.stringify(clientes));
@@ -214,6 +218,18 @@ document.addEventListener('DOMContentLoaded', function() {
             renderizarGanhosMensais();
         }
     });
+    toggleGanhosBtn.addEventListener('click', function() {
+    
+    listaGanhosMensaisElemento.classList.toggle('escondido');
+    totalMensalContainer.classList.toggle('escondido');
+
+    
+    if (listaGanhosMensaisElemento.classList.contains('escondido')) {
+        toggleGanhosBtn.textContent = 'Mostrar';
+    } else {
+        toggleGanhosBtn.textContent = 'Ocultar';
+    }
+});
     
     
     renderizarFila();
