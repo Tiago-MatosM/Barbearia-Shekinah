@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const ganhosMensais = JSON.parse(localStorage.getItem('ganhosMensais')) || [];
     let editandoIndex = null;
     let editandoFilaIndex = null;
+    const itensPorPagina = 10;
+    let paginaAtualFila = 1;
     
     const inputFila = document.getElementById('nomeFila');
     const botaoAdicionarFila = document.getElementById('adicionarFila');
@@ -32,7 +34,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderizarFila() {
     listaFilaElemento.innerHTML = '';
-    fila.forEach((cliente, index) => {
+    const paginacaoContainer = document.getElementById('paginacaoFila');
+    paginacaoContainer.innerHTML = '';
+
+    const inicio = (paginaAtualFila - 1) * itensPorPagina;
+    const fim = inicio + itensPorPagina;
+    const itensDaPagina = fila.slice(inicio, fim);
+
+    itensDaPagina.forEach((cliente, indexNaPagina) => {
+        const indexReal = inicio + indexNaPagina;
         const itemLista = document.createElement('li');
         
         const nomeItem = document.createElement('span');
@@ -46,9 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
             okIcone.classList.add('ok-icon');
             itemLista.appendChild(okIcone);
         }
-        
-        itemLista.appendChild(nomeItem);
 
+        itemLista.appendChild(nomeItem);
+        
         const botoes = document.createElement('div');
         botoes.classList.add('botoes-fila');
 
@@ -58,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         botaoEditar.title = 'Editar nome na fila';
         botaoEditar.addEventListener('click', function() {
             inputFila.value = cliente.nome;
-            editandoFilaIndex = index;
+            editandoFilaIndex = indexReal;
             botaoAdicionarFila.textContent = 'Salvar Alterações';
             inputFila.focus();
         });
@@ -69,14 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
             botaoChamar.innerHTML = '▶️';
             botaoChamar.title = 'Chamar cliente';
             botaoChamar.classList.add('botao-acao', 'chamar');
-            
+
             botaoChamar.addEventListener('click', function() {
-                fila[index].atendido = true;
+                fila[indexReal].atendido = true;
                 salvarDados();
                 renderizarFila();
                 inputNome.value = cliente.nome;
             });
-            
+
             botoes.appendChild(botaoChamar);
         }
 
@@ -84,17 +94,32 @@ document.addEventListener('DOMContentLoaded', function() {
         botaoLixeira.innerHTML = '🗑️';
         botaoLixeira.classList.add('botao-acao', 'lixeira');
         botaoLixeira.title = 'Remover da fila';
-        
+
         botaoLixeira.addEventListener('click', function() {
-            fila.splice(index, 1);
+            fila.splice(indexReal, 1);
             salvarDados();
             renderizarFila();
         });
-        
+
         botoes.appendChild(botaoLixeira);
         itemLista.appendChild(botoes);
         listaFilaElemento.appendChild(itemLista);
     });
+
+    
+    const totalPaginas = Math.ceil(fila.length / itensPorPagina);
+    for (let i = 1; i <= totalPaginas; i++) {
+        const botaoPagina = document.createElement('button');
+        botaoPagina.textContent = i;
+        if (i === paginaAtualFila) {
+            botaoPagina.classList.add('active');
+        }
+        botaoPagina.addEventListener('click', function() {
+            paginaAtualFila = i;
+            renderizarFila();
+        });
+        paginacaoContainer.appendChild(botaoPagina);
+    }
 }
 
 function renderizarClientes() {
