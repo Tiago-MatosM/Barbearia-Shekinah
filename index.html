@@ -1,0 +1,138 @@
+<!-- Diz ao navegador que isso é um documento HTML5 -->
+<!DOCTYPE html>
+<!-- Define o idioma principal do conteúdo como português do Brasil (bom para SEO e acessibilidade) -->
+<html lang="pt-br">
+<head>
+    <!-- Conjunto de caracteres padrão que evita problemas com acentos -->
+    <meta charset="UTF-8">
+    <!-- Faz o layout se ajustar ao tamanho da tela (responsividade em mobile) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título que aparece na aba do navegador -->
+    <title>Barbearia Shekinah - Painel</title>
+
+    <!-- “Aquece” a conexão com o domínio de fontes do Google para carregar mais rápido -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Pré-conecta no domínio que hospeda os arquivos das fontes (com CORS habilitado) -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Carrega as fontes Oswald (peso 500) e Roboto (400 e 500). Evite excessos de variações para performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Biblioteca de ícones Font Awesome (se já usa poucos ícones, vale pensar em ícones locais/SVG para reduzir peso) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <!-- Seu CSS principal; mantenha nomes de classes consistentes e semânticos -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Ícone da aba (favicon). Tamanho 32x32 é ok; PNG transparente costuma ficar melhor -->
+    <link rel="icon" sizes="32x32" href="Logo BS.png" type="image/png">
+    <!-- Ícone para atalho em iOS -->
+    <link rel="apple-touch-icon" href="Logo BS.png">
+    <!-- Manifesto PWA (permite instalar no celular/desktop e controlar cores/telas de splash) -->
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <!-- Título principal da página; bom manter apenas um <h1> por página para semântica -->
+    <h1>Barbearia Shekinah</h1>
+
+    <!-- Contêiner geral para organizar as seções lado a lado (grid/flex no CSS) -->
+    <div class="container">
+
+        <!-- ============== Seção: Fila de Espera ============== -->
+        <!-- “secao” ajuda no estilo geral; “fila-secao” permite customizar só essa parte -->
+        <div class="secao fila-secao">
+            <!-- Cabeçalho visual da seção (título + botões de ação) -->
+            <div class="secao-header">
+                <h2>Fila de Espera</h2>
+                <!-- Botão de limpar tudo; cuidado com UX: confirme antes de apagar para não perder dados sem querer -->
+                <button class="apagar-tudo-btn" id="apagarFila">Limpar Fila</button>
+            </div>
+
+            <!-- Rótulo acessível ligado ao input pelo atributo for/id -->
+            <label for="nomeFila">Nome do Cliente:</label>
+            <!-- Campo para digitar o nome; placeholder dá dica, mas não substitui o label -->
+            <!-- Dica extra: adicionar autocomplete="name" pode ajudar no mobile -->
+            <input type="text" id="nomeFila" placeholder="Digite o nome..." autocomplete="name" />
+            <!-- Botão para adicionar o nome digitado à fila -->
+            <button class="botao-principal" id="adicionarFila">Adicionar à Fila</button>
+
+            <!-- Lista visual da fila; o JS vai popular <li> aqui -->
+            <ul class="lista" id="listaFila"></ul>
+
+            <!-- Controles de paginação da fila (prev/próximo, números etc. gerenciados no JS) -->
+            <div id="paginacaoFila" class="paginacao-container"></div>
+        </div>
+
+        <!-- ============== Seção: Controle de Caixa ============== -->
+        <div class="secao controle-caixa-secao">
+            <!-- Cabeçalho da seção (apenas título) -->
+            <div class="secao-header">
+                <h2>Controle de Caixa</h2>
+            </div>
+
+            <!-- Campo para nome do cliente atendido no caixa -->
+            <label for="nomeCliente">Nome do Cliente:</label>
+            <input type="text" id="nomeCliente" placeholder="Cliente atendido..." autocomplete="name" />
+
+            <!-- Campo para valor pago -->
+            <!-- type="number" é ok, mas em real brasileiro pode ser legal usar inputmode="decimal" e tratar vírgula -->
+            <label for="valorPago">Valor Pago:</label>
+            <input
+                type="number"
+                id="valorPago"
+                placeholder="R$ 0,00"
+                inputmode="decimal"
+                step="0.01"
+                min="0"
+                aria-label="Valor pago em reais"
+            />
+
+            <!-- Adiciona o cliente e valor à lista do dia -->
+            <button class="botao-principal" id="adicionarCliente">Adicionar</button>
+
+            <!-- Linha separadora só visual -->
+            <hr>
+
+            <!-- Subtítulo para a lista de clientes do dia -->
+            <h2>Clientes do Dia</h2>
+
+            <!-- Lista que o JS vai preencher com os atendimentos do dia -->
+            <ul class="lista" id="listaClientes"></ul>
+
+            <!-- Rodapé da seção com o total do dia e ação de finalizar -->
+            <div class="total-container">
+                <!-- Mostra o total somado; span separado facilita atualizar via JS -->
+                <p>Total Arrecadado: R$ <span id="totalValor">0.00</span></p>
+                <!-- Finaliza o dia: geralmente move dados para “histórico”/“mensal” e zera os da tela -->
+                <!-- Dica: confirme com o usuário antes de limpar; também registre a data/hora do fechamento -->
+                <button class="finalizar-btn" id="finalizarDia">Finalizar Dia</button>
+            </div>
+        </div>
+
+        <!-- ============== Seção: Ganhos do Mês ============== -->
+        <div class="secao ganhos-mensais-secao">
+            <!-- Cabeçalho com título + botões (ocultar/mostrar e apagar tudo) -->
+            <div class="secao-header">
+                <h2>Ganhos do Mês</h2>
+                <div>
+                    <!-- Alterna a visibilidade da lista mensal (bom para telas pequenas) -->
+                    <button class="finalizar-btn" id="toggleGanhosBtn">Ocultar</button>
+                    <!-- Apaga todos os registros mensais (atenção: considere um “Tem certeza?” antes) -->
+                    <button class="apagar-tudo-btn" id="apagarGanhos">Apagar Tudo</button>
+                </div>
+            </div>
+
+            <!-- Lista que o JS vai preencher com cada dia/entrada do mês (data + valor) -->
+            <ul class="lista" id="listaGanhosMensais"></ul>
+
+            <!-- Totalizador mensal; separado facilita esconder/mostrar junto com a lista -->
+            <p id="totalMensalContainer" class="total-container">
+                Total do Mês: R$ <span id="totalMensal">0.00</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Importa a lógica da página; mantenha o JS no final do body para carregar após o HTML -->
+    <!-- Se quiser mais performance, dá para usar defer no <script> no <head>; aqui no fim já é ótimo -->
+    <script src="script.js"></script>
+</body>
+</html>

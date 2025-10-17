@@ -1,0 +1,309 @@
+/* ESTILOS GERAIS E FUNDO MODERNO */
+body {
+    font-family: 'Roboto', sans-serif; /* Define a fonte principal */
+    background-color: #0D1117; /* Cor de fundo escura */
+    background-image: radial-gradient(circle at 1% 1%, hsla(207, 90%, 54%, 0.2), transparent 25%), /* Gradiente no canto superior esquerdo */
+                      radial-gradient(circle at 99% 99%, hsla(207, 90%, 54%, 0.1), transparent 25%); /* Gradiente no canto inferior direito */
+    margin: 0; /* Remove margens do body */
+    padding: 20px; /* Espaçamento interno do body */
+    color: #e0e0e0; /* Cor padrão do texto */
+    display: flex; /* Define layout flexível */
+    flex-direction: column; /* Coloca elementos em coluna */
+    align-items: center; /* Centraliza os itens no eixo horizontal */
+    min-height: 100vh; /* Garante altura mínima de tela cheia */
+    box-sizing: border-box; /* Inclui bordas e padding no cálculo do tamanho */
+    overflow-x: hidden; /* Evita scroll horizontal */
+}
+
+h1 {
+    font-family: 'Oswald', sans-serif; /* Fonte destacada */
+    text-transform: uppercase; /* Deixa em maiúsculas */
+    font-size: 2.8em; /* Tamanho grande */
+    letter-spacing: 3px; /* Espaçamento entre letras */
+    color: #ffffff; /* Cor branca */
+    margin-bottom: 40px; /* Espaço inferior */
+    text-align: center; /* Centraliza o título */
+}
+
+/* CONTAINER E SEÇÕES COM EFEITO "GLASSMORPHISM" */
+.container {
+    display: flex; /* Layout em flex */
+    flex-wrap: wrap; /* Permite quebra de linha dos itens */
+    justify-content: center; /* Centraliza os itens */
+    gap: 30px; /* Espaçamento entre itens */
+    width: 100%; /* Ocupa toda largura disponível */
+    max-width: 1400px; /* Limita largura máxima */
+}
+
+.secao {
+    flex: 1; /* Faz cada seção ocupar o mesmo espaço */
+    min-width: 350px; /* Define largura mínima */
+    background: rgba(29, 35, 46, 0.6); /* Fundo semi-transparente */
+    backdrop-filter: blur(10px); /* Aplica efeito de desfoque */
+    -webkit-backdrop-filter: blur(10px); /* Versão para Safari */
+    border-radius: 16px; /* Bordas arredondadas */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda clara */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Sombra */
+    padding: 30px; /* Espaçamento interno */
+    box-sizing: border-box; /* Inclui borda e padding no cálculo */
+    transition: transform 0.4s ease, border-color 0.4s ease; /* Animação suave ao passar o mouse */
+}
+
+.secao:hover {
+    transform: translateY(-8px) scale(1.02); /* Sobe levemente e aumenta */
+    border-color: rgba(255, 255, 255, 0.25); /* Bordas mais visíveis */
+}
+
+.secao-header {
+    display: flex; /* Layout flex */
+    justify-content: space-between; /* Espaça os itens nas extremidades */
+    align-items: center; /* Centraliza verticalmente */
+    margin-bottom: 25px; /* Espaço inferior */
+    gap: 15px; /* Espaço entre itens */
+}
+
+.secao-header h2 {
+    font-family: 'Oswald', sans-serif; /* Fonte destacada */
+    text-transform: uppercase; /* Texto em maiúsculo */
+    margin: 0; /* Remove margens */
+    color: #ffffff; /* Branco */
+    font-size: 22px; /* Tamanho médio */
+    letter-spacing: 1px; /* Espaçamento entre letras */
+}
+
+/* FORMULÁRIOS: INPUTS E LABELS */
+label {
+    display: block; /* Ocupa linha inteira */
+    margin-bottom: 8px; /* Espaço abaixo */
+    font-weight: 500; /* Peso médio */
+    font-size: 15px; /* Tamanho do texto */
+    color: #a0a0a0; /* Cinza */
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%; /* Ocupa largura total */
+    padding: 14px; /* Espaçamento interno */
+    margin-bottom: 20px; /* Espaço inferior */
+    background-color: rgba(0, 0, 0, 0.2); /* Fundo escuro */
+    color: #e0e0e0; /* Texto claro */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda clara */
+    border-radius: 8px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho de texto */
+    box-sizing: border-box; /* Inclui padding no cálculo */
+    transition: all 0.3s ease; /* Transição suave */
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    outline: none; /* Remove contorno padrão */
+    border-color: hsl(207, 90%, 54%); /* Cor azul na borda */
+    background-color: rgba(0, 0, 0, 0.3); /* Fundo mais escuro */
+    box-shadow: 0 0 15px hsla(207, 90%, 54%, 0.3); /* Brilho azul */
+}
+
+hr {
+    border: 0; /* Remove borda padrão */
+    height: 1px; /* Altura da linha */
+    background: rgba(255, 255, 255, 0.1); /* Linha clara */
+    margin: 35px 0; /* Espaço acima e abaixo */
+}
+
+/* BOTÕES */
+.botao-principal {
+    width: 100%; /* Botão ocupa largura total */
+    padding: 15px; /* Espaçamento interno */
+    border: none; /* Remove borda */
+    background: hsl(207, 90%, 54%); /* Fundo azul */
+    color: #ffffff; /* Texto branco */
+    font-size: 17px; /* Texto grande */
+    font-weight: bold; /* Negrito */
+    border-radius: 8px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mãozinha */
+    transition: all 0.2s ease-in-out; /* Animação rápida */
+}
+
+.botao-principal:hover {
+    background: hsl(207, 90%, 60%); /* Azul mais claro */
+    transform: translateY(-2px); /* Sobe um pouco */
+    box-shadow: 0 5px 20px hsla(207, 90%, 54%, 0.4); /* Sombra azul */
+}
+
+.botao-principal:active {
+    transform: translateY(0); /* Volta ao normal */
+    box-shadow: none; /* Remove sombra */
+}
+
+.finalizar-btn, .apagar-tudo-btn {
+    background-color: rgba(255, 255, 255, 0.08); /* Fundo translúcido */
+    color: #e0e0e0; /* Texto cinza claro */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda leve */
+    padding: 8px 12px; /* Espaçamento interno */
+    border-radius: 6px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mãozinha */
+    font-size: 14px; /* Texto pequeno */
+    transition: all 0.3s ease; /* Transição suave */
+}
+
+.finalizar-btn:hover {
+    background-color: hsl(207, 90%, 54%); /* Azul */
+    border-color: hsl(207, 90%, 54%); /* Azul */
+    color: #fff; /* Texto branco */
+}
+
+.apagar-tudo-btn {
+    background-color: rgba(255, 82, 82, 0.1); /* Vermelho claro */
+    border-color: rgba(255, 82, 82, 0.3); /* Vermelho borda */
+    color: #ff7171; /* Texto vermelho */
+}
+
+.apagar-tudo-btn:hover {
+    background-color: #ff5252; /* Vermelho forte */
+    border-color: #ff5252; /* Vermelho forte */
+    color: #000000; /* Texto preto */
+}
+
+/* ANIMAÇÃO PARA ITENS DA LISTA */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); } /* Começa invisível à esquerda */
+    to { opacity: 1; transform: translateX(0); } /* Fica visível na posição normal */
+}
+
+/* LISTAS */
+.lista {
+    list-style-type: none; /* Remove bolinhas */
+    padding: 0; /* Remove espaçamento interno */
+    margin: 20px 0; /* Espaço acima e abaixo */
+}
+
+.lista li {
+    display: flex; /* Layout flexível */
+    justify-content: space-between; /* Espaça conteúdo */
+    align-items: center; /* Centraliza verticalmente */
+    padding: 15px; /* Espaçamento interno */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linha separadora */
+    font-size: 16px; /* Tamanho do texto */
+    transition: background-color 0.3s ease; /* Transição suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    line-height: 1.5; /* Altura da linha */
+    animation: slideIn 0.4s ease-out; /* Animação de entrada */
+}
+
+.lista li:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Fundo levemente mais claro */
+}
+
+.lista li:last-child {
+    border-bottom: none; /* Remove linha do último item */
+}
+
+/* ESTILO PARA QUANDO A LISTA ESTIVER VAZIA (EMPTY STATE) */
+.empty-state {
+    text-align: center; /* Centraliza texto */
+    padding: 40px 20px; /* Espaçamento */
+    color: #888; /* Texto cinza */
+    border: 2px dashed rgba(255, 255, 255, 0.1); /* Borda tracejada */
+    border-radius: 8px; /* Bordas arredondadas */
+    margin: 20px 0; /* Espaço acima e abaixo */
+}
+
+.empty-state i {
+    font-size: 2em; /* Ícone grande */
+    display: block; /* Ocupa linha inteira */
+    margin-bottom: 10px; /* Espaço inferior */
+    opacity: 0.5; /* Ícone mais apagado */
+}
+
+.item-nome {
+    flex: 1; /* Ocupa espaço disponível */
+}
+
+.atendido {
+    color: rgba(255, 255, 255, 0.5); /* Texto apagado */
+    text-decoration: line-through; /* Texto riscado */
+}
+
+.botoes-fila, .botoes-container {
+    display: flex; /* Layout flexível */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.botao-acao {
+    background: none; /* Remove fundo */
+    border: none; /* Remove borda */
+    cursor: pointer; /* Cursor de mãozinha */
+    font-size: 18px; /* Ícone maior */
+    padding: 5px; /* Espaçamento interno */
+    line-height: 1; /* Altura do ícone */
+    transition: all 0.2s ease; /* Transição suave */
+    margin-left: 10px; /* Espaço à esquerda */
+    width: 30px; /* Largura fixa */
+    height: 30px; /* Altura fixa */
+}
+
+.botao-acao.lixeira { color: #e74c3c; } /* Cor vermelha */
+.botao-acao.lixeira:hover { transform: scale(1.2); color: #ff7171; } /* Aumenta e clareia */
+.botao-acao.editar { color: #007bff; } /* Azul */
+.botao-acao.editar:hover { transform: scale(1.2); color: #3498db; } /* Aumenta e clareia */
+.botao-acao.chamar { color: #28a745; } /* Verde */
+.botao-acao.chamar:hover { transform: scale(1.2); color: #2ecc71; } /* Aumenta e clareia */
+
+/* TOTAIS E PAGINAÇÃO */
+.total-container {
+    display: flex; /* Layout flex */
+    justify-content: space-between; /* Espaça conteúdo */
+    align-items: center; /* Centraliza verticalmente */
+    margin-top: 20px; /* Espaço acima */
+    font-size: 1.1em; /* Texto maior */
+}
+
+#totalValor, #totalMensal {
+    font-size: 1.5em; /* Texto grande */
+    font-weight: bold; /* Negrito */
+    color: hsl(207, 90%, 70%); /* Azul claro */
+}
+
+.paginacao-container {
+    display: flex; /* Layout flex */
+    justify-content: center; /* Centraliza botões */
+    gap: 8px; /* Espaço entre botões */
+    margin-top: 20px; /* Espaço acima */
+}
+
+.paginacao-container button {
+    background-color: rgba(255, 255, 255, 0.08); /* Fundo translúcido */
+    color: #e0e0e0; /* Texto cinza claro */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda leve */
+    padding: 8px 14px; /* Espaçamento interno */
+    cursor: pointer; /* Cursor de mãozinha */
+    border-radius: 6px; /* Bordas arredondadas */
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.paginacao-container button:hover {
+    background-color: rgba(255, 255, 255, 0.15); /* Fundo mais claro */
+}
+
+.paginacao-container button.active {
+    background-color: hsl(207, 90%, 54%); /* Fundo azul */
+    color: #ffffff; /* Texto branco */
+    font-weight: bold; /* Negrito */
+    border-color: hsl(207, 90%, 54%); /* Borda azul */
+}
+
+.escondido {
+    display: none; /* Esconde elementos */
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* Reduz espaçamento interno */
+    }
+    .secao {
+        min-width: 100%; /* Ocupa largura total */
+        transform: none !important; /* Remove efeito hover */
+    }
+    h1 {
+        font-size: 2em; /* Reduz título */
+        margin-bottom: 20px; /* Reduz espaçamento */
+    }
+}
